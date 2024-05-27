@@ -1,6 +1,6 @@
-"""Doc Strings automatically generated
-
-pyenv local 3.10.6"""
+import os
+import sys
+sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 
 import json
 from typing import Tuple, Union

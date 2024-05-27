@@ -1,7 +1,3 @@
-"""Doc Strings automatically generated
-
-pyenv local 3.10.6"""
-
 import os
 from PIL import Image, ImageOps
 import numpy as np
@@ -12,23 +8,12 @@ import random
 import folder_paths
 from termcolor import colored
 
-try:
-    from ....utils.tensor_utils import TensorImgUtils
-    from ....constants import (
-        PICTURE_EXTENSION_LIST,
-        VIDEO_EXTENSION_LIST,
-        TEXT_EXTENSION_LIST,
-    )
-except ImportError:
-    import sys
-
-    sys.path.append(os.path.dirname(os.path.dirname(__file__)))
-    from utils.tensor_utils import TensorImgUtils
-    from constants import (
-        PICTURE_EXTENSION_LIST,
-        VIDEO_EXTENSION_LIST,
-        TEXT_EXTENSION_LIST,
-    )
+from ..utils.tensor_utils import TensorImgUtils
+from ..constants import (
+    PICTURE_EXTENSION_LIST,
+    VIDEO_EXTENSION_LIST,
+    TEXT_EXTENSION_LIST,
+)
 
 
 class LoadRandomImgPosePairNode:

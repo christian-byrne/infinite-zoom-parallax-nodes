@@ -1,21 +1,10 @@
-"""Doc Strings automatically generated
-
-pyenv local 3.10.6"""
-
 import torch
 from torchvision import transforms
 from termcolor import colored
+
+from ..utils.tensor_utils import TensorImgUtils
+
 from typing import Tuple
-
-
-try:
-    from ...utils.tensor_utils import TensorImgUtils
-except ImportError:
-    import sys
-    import os
-
-    sys.path.append(os.path.dirname(os.path.dirname(__file__)))
-    from utils.tensor_utils import TensorImgUtils
 
 
 class ShrinkAndAlphaPadNode:
@@ -33,37 +22,46 @@ class ShrinkAndAlphaPadNode:
                 "input_image": ("IMAGE",),
             },
             "optional": {
-                "velocity_left": ("INT",{
-                    "default": 128,
-                    "min": 0,
-                    "max": 512,
-                    "step": 1,
-                }),
-                "velocity_top": ("INT",{
-                    "default": 128,
-                    "min": 0,
-                    "max": 512,
-                    "step": 1,
-                }),
-                "velocity_right": ("INT",{
-                    "default": 128,
-                    "min": 0,
-                    "max": 512,
-                    "step": 1,
-                }),
-                "velocity_bottom": ("INT",{
-                    "default": 128,
-                    "min": 0,
-                    "max": 512,
-                    "step": 1,
-                }),
-                "feather_px": ("INT",{
-                    "default": 0,
-                    "min": 0,
-                    "max": 64,
-                    "step": 1,
-                    "display": "slider"
-                }),
+                "velocity_left": (
+                    "INT",
+                    {
+                        "default": 128,
+                        "min": 0,
+                        "max": 512,
+                        "step": 1,
+                    },
+                ),
+                "velocity_top": (
+                    "INT",
+                    {
+                        "default": 128,
+                        "min": 0,
+                        "max": 512,
+                        "step": 1,
+                    },
+                ),
+                "velocity_right": (
+                    "INT",
+                    {
+                        "default": 128,
+                        "min": 0,
+                        "max": 512,
+                        "step": 1,
+                    },
+                ),
+                "velocity_bottom": (
+                    "INT",
+                    {
+                        "default": 128,
+                        "min": 0,
+                        "max": 512,
+                        "step": 1,
+                    },
+                ),
+                "feather_px": (
+                    "INT",
+                    {"default": 0, "min": 0, "max": 64, "step": 1, "display": "slider"},
+                ),
             },
         }
 
@@ -116,33 +114,55 @@ class ShrinkAndAlphaPadNode:
         # Composite the shrunk image onto the previous image (to provide inpainting context - better than a black border in some setups)
         # Paste such that we re-incorporate uneven velocities on the same plane
         if velocity_left > velocity_right or remove_vertical > remove_horizontal:
-            left_margin = velocity_left 
-            right_margin = (input_image.shape[1] - shrunk_image.shape[1]) - velocity_left
+            left_margin = velocity_left
+            right_margin = (
+                input_image.shape[1] - shrunk_image.shape[1]
+            ) - velocity_left
         else:
             right_margin = velocity_right
-            left_margin = (input_image.shape[1] - shrunk_image.shape[1]) - velocity_right
-        print(colored(f"left_margin: {left_margin}, right_margin: {right_margin}", "light_green"))
+            left_margin = (
+                input_image.shape[1] - shrunk_image.shape[1]
+            ) - velocity_right
+        print(
+            colored(
+                f"left_margin: {left_margin}, right_margin: {right_margin}",
+                "light_green",
+            )
+        )
         if velocity_top > velocity_bottom or remove_horizontal > remove_vertical:
             top_margin = velocity_top
-            bottom_margin = (input_image.shape[0] - shrunk_image.shape[0]) - velocity_top
+            bottom_margin = (
+                input_image.shape[0] - shrunk_image.shape[0]
+            ) - velocity_top
         else:
             bottom_margin = velocity_bottom
-            top_margin = (input_image.shape[0] - shrunk_image.shape[0]) - velocity_bottom
-        print(colored(f"top_margin: {top_margin}, bottom_margin: {bottom_margin}", "light_green"))
-        
+            top_margin = (
+                input_image.shape[0] - shrunk_image.shape[0]
+            ) - velocity_bottom
+        print(
+            colored(
+                f"top_margin: {top_margin}, bottom_margin: {bottom_margin}",
+                "light_green",
+            )
+        )
+
         # To simply center the image, use the following line instead
         # input_image[remove_top:-remove_bottom, remove_left:-remove_right, :] = shrunk_image
 
         # Make copy of input image
         output_image = input_image.clone()
-        output_image[top_margin:-bottom_margin, left_margin:-right_margin, :] = shrunk_image
-        
+        output_image[top_margin:-bottom_margin, left_margin:-right_margin, :] = (
+            shrunk_image
+        )
+
         # Apply feathering to the mask only
         top_margin = max(0, top_margin + feather_px) // 2
         bottom_margin = max(0, bottom_margin + feather_px // 2)
         left_margin = max(0, left_margin + feather_px // 2)
         right_margin = max(0, right_margin + feather_px // 2)
-        mask_tensor[top_margin:-bottom_margin, left_margin:-right_margin] = self.TRANSPARENT
+        mask_tensor[top_margin:-bottom_margin, left_margin:-right_margin] = (
+            self.TRANSPARENT
+        )
 
         output_image = TensorImgUtils.test_unsqueeze_batch(output_image)
         mask_tensor = TensorImgUtils.test_unsqueeze_batch(mask_tensor)

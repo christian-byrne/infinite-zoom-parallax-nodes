@@ -1,7 +1,3 @@
-"""Doc Strings automatically generated
-
-pyenv local 3.10.6"""
-
 import os
 import json
 from PIL import Image, ImageOps
@@ -9,16 +5,9 @@ import numpy as np
 import torch
 from torchvision import transforms
 
+from ..utils.tensor_utils import TensorImgUtils
+
 from typing import Tuple, Union
-
-
-try:
-    from ....utils.tensor_utils import TensorImgUtils
-except ImportError:
-    import sys
-
-    sys.path.append(os.path.dirname(os.path.dirname(__file__)))
-    from utils.tensor_utils import TensorImgUtils
 
 
 class LoadParallaxStartNode:

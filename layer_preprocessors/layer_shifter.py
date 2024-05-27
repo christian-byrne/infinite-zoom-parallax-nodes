@@ -1,21 +1,9 @@
-"""Doc Strings automatically generated
-
-pyenv local 3.10.6"""
-
 import torch
 import json
+
+from ..utils.tensor_utils import TensorImgUtils
+
 from typing import Tuple
-
-
-try:
-    from ...utils.tensor_utils import TensorImgUtils
-except ImportError:
-    import sys
-    import os
-
-    sys.path.append(os.path.dirname(os.path.dirname(__file__)))
-    from utils.tensor_utils import TensorImgUtils
-
 
 class LayerShifterNode:
     RETURN_TYPES = (

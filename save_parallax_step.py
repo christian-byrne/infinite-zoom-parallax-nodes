@@ -1,23 +1,14 @@
-"""Doc Strings automatically generated
+import os
+import sys
 
-pyenv local 3.10.6"""
-
+sys.path.append(os.path.dirname(os.path.dirname(__file__)))
+import json
 import torch
 from torchvision import transforms
-import os
-import json
+
+from .utils.tensor_utils import TensorImgUtils
 
 from typing import Tuple
-
-
-try:
-    from ...utils.tensor_utils import TensorImgUtils
-except ImportError:
-    import sys
-    import os
-
-    sys.path.append(os.path.dirname(os.path.dirname(__file__)))
-    from utils.tensor_utils import TensorImgUtils
 
 
 class SaveParallaxStepNode:
