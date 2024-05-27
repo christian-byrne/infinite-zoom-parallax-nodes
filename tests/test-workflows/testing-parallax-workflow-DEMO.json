@@ -1,0 +1,1083 @@
+{
+  "last_node_id": 59,
+  "last_link_id": 69,
+  "nodes": [
+    {
+      "id": 22,
+      "type": "MaskToImage",
+      "pos": [
+        360,
+        860
+      ],
+      "size": {
+        "0": 210,
+        "1": 26
+      },
+      "flags": {
+        "collapsed": true
+      },
+      "order": 11,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "mask",
+          "type": "MASK",
+          "link": 44
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            30
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "MaskToImage"
+      }
+    },
+    {
+      "id": 33,
+      "type": "Wrap-Shift and Mask Slices for Parallax 🔹Elimination Nodes🔹",
+      "pos": [
+        360,
+        650
+      ],
+      "size": {
+        "0": 319.20001220703125,
+        "1": 166
+      },
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "input_image",
+          "type": "IMAGE",
+          "link": 51
+        },
+        {
+          "name": "parallax_config",
+          "type": "parallax_config",
+          "link": 61
+        },
+        {
+          "name": "object_mask_1",
+          "type": "MASK",
+          "link": null
+        },
+        {
+          "name": "object_mask_2",
+          "type": "MASK",
+          "link": null
+        },
+        {
+          "name": "object_mask_3",
+          "type": "MASK",
+          "link": null
+        },
+        {
+          "name": "object_mask_4",
+          "type": "MASK",
+          "link": null
+        },
+        {
+          "name": "object_mask_5",
+          "type": "MASK",
+          "link": null
+        },
+        {
+          "name": "object_mask_6",
+          "type": "MASK",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            42,
+            45
+          ],
+          "shape": 3,
+          "slot_index": 0
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": [
+            43,
+            44
+          ],
+          "shape": 3,
+          "slot_index": 1
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Wrap-Shift and Mask Slices for Parallax 🔹Elimination Nodes🔹"
+      },
+      "color": "#46444a",
+      "bgcolor": "#323036"
+    },
+    {
+      "id": 24,
+      "type": "PreviewImage",
+      "pos": [
+        360,
+        900
+      ],
+      "size": {
+        "0": 300,
+        "1": 290
+      },
+      "flags": {},
+      "order": 13,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 30
+        }
+      ],
+      "title": "Preview - Shifted Layers Mask",
+      "properties": {
+        "Node name for S&R": "PreviewImage"
+      },
+      "color": "#2a363b",
+      "bgcolor": "#3f5159"
+    },
+    {
+      "id": 11,
+      "type": "PreviewImage",
+      "pos": [
+        360,
+        330
+      ],
+      "size": {
+        "0": 310,
+        "1": 270
+      },
+      "flags": {},
+      "order": 9,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 45
+        }
+      ],
+      "title": "Preview - Shifted Layers Image",
+      "properties": {
+        "Node name for S&R": "PreviewImage"
+      },
+      "color": "#2a363b",
+      "bgcolor": "#3f5159"
+    },
+    {
+      "id": 38,
+      "type": "Load Infinite Parallax Step Start 🔹Elimination Nodes🔹",
+      "pos": [
+        10,
+        650
+      ],
+      "size": {
+        "0": 315,
+        "1": 78
+      },
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "parallax_config",
+          "type": "parallax_config",
+          "link": 60
+        },
+        {
+          "name": "start_image",
+          "type": "IMAGE",
+          "link": 59
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            51,
+            52
+          ],
+          "shape": 3,
+          "slot_index": 0
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null,
+          "shape": 3
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Load Infinite Parallax Step Start 🔹Elimination Nodes🔹"
+      },
+      "color": "#46444a",
+      "bgcolor": "#323036"
+    },
+    {
+      "id": 46,
+      "type": "LoadImage",
+      "pos": [
+        -360,
+        890
+      ],
+      "size": {
+        "0": 320,
+        "1": 310
+      },
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            59
+          ],
+          "shape": 3,
+          "slot_index": 0
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null,
+          "shape": 3
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": [
+        "dresden_by_moonlight.jpg",
+        "image"
+      ]
+    },
+    {
+      "id": 47,
+      "type": "Infinite Parallax User Dict 🔹Elimination Nodes🔹",
+      "pos": [
+        -360,
+        390
+      ],
+      "size": {
+        "0": 315,
+        "1": 442
+      },
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "parallax_config",
+          "type": "parallax_config",
+          "links": [
+            60,
+            61,
+            62,
+            67
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Infinite Parallax User Dict 🔹Elimination Nodes🔹"
+      },
+      "widgets_values": [
+        "dresden",
+        3,
+        0.125,
+        280,
+        49.800000000000004,
+        265,
+        18,
+        150,
+        28.7,
+        120,
+        144.8,
+        134,
+        169.8,
+        0,
+        0,
+        0,
+        0
+      ],
+      "color": "#46444a",
+      "bgcolor": "#323036"
+    },
+    {
+      "id": 16,
+      "type": "CLIPTextEncode",
+      "pos": [
+        801.5835571655277,
+        537.3509594032288
+      ],
+      "size": {
+        "0": 380,
+        "1": 130
+      },
+      "flags": {
+        "collapsed": true
+      },
+      "order": 6,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 16
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            13
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CLIPTextEncode"
+      },
+      "widgets_values": [
+        "embedding:embeddings/NegativeDynamics-neg, embedding:embeddings/ng_deepnegative_v1_75t, "
+      ],
+      "color": "#322",
+      "bgcolor": "#533"
+    },
+    {
+      "id": 18,
+      "type": "KSampler",
+      "pos": [
+        791.5835571655277,
+        667.350959403229
+      ],
+      "size": {
+        "0": 315,
+        "1": 262
+      },
+      "flags": {
+        "collapsed": true
+      },
+      "order": 12,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 18
+        },
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 19
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 20
+        },
+        {
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 17
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            21
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "KSampler"
+      },
+      "widgets_values": [
+        788508600922120,
+        "randomize",
+        45,
+        5,
+        "dpmpp_2m_sde_gpu",
+        "karras",
+        0.85
+      ]
+    },
+    {
+      "id": 17,
+      "type": "CheckpointLoaderSimple",
+      "pos": [
+        751.5835571655277,
+        627.350959403229
+      ],
+      "size": {
+        "0": 540,
+        "1": 100
+      },
+      "flags": {
+        "collapsed": true
+      },
+      "order": 2,
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            18
+          ],
+          "shape": 3,
+          "slot_index": 0
+        },
+        {
+          "name": "CLIP",
+          "type": "CLIP",
+          "links": [
+            15,
+            16
+          ],
+          "shape": 3,
+          "slot_index": 1
+        },
+        {
+          "name": "VAE",
+          "type": "VAE",
+          "links": [
+            14,
+            22
+          ],
+          "shape": 3,
+          "slot_index": 2
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CheckpointLoaderSimple"
+      },
+      "widgets_values": [
+        "Stable-diffusion/art_styles/impressionismOil_sd15.safetensors"
+      ]
+    },
+    {
+      "id": 14,
+      "type": "InpaintModelConditioning",
+      "pos": [
+        931.5835571655277,
+        627.350959403229
+      ],
+      "size": {
+        "0": 216.59999084472656,
+        "1": 106
+      },
+      "flags": {
+        "collapsed": true
+      },
+      "order": 10,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 12
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 13
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 14
+        },
+        {
+          "name": "pixels",
+          "type": "IMAGE",
+          "link": 42
+        },
+        {
+          "name": "mask",
+          "type": "MASK",
+          "link": 43
+        }
+      ],
+      "outputs": [
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "links": [
+            19
+          ],
+          "shape": 3,
+          "slot_index": 0
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "links": [
+            20
+          ],
+          "shape": 3,
+          "slot_index": 1
+        },
+        {
+          "name": "latent",
+          "type": "LATENT",
+          "links": [
+            17
+          ],
+          "shape": 3,
+          "slot_index": 2
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "InpaintModelConditioning"
+      }
+    },
+    {
+      "id": 19,
+      "type": "VAEDecode",
+      "pos": [
+        941.5835571655277,
+        667.350959403229
+      ],
+      "size": {
+        "0": 210,
+        "1": 46
+      },
+      "flags": {
+        "collapsed": true
+      },
+      "order": 14,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "samples",
+          "type": "LATENT",
+          "link": 21
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 22
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            47,
+            48,
+            68
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAEDecode"
+      }
+    },
+    {
+      "id": 15,
+      "type": "CLIPTextEncode",
+      "pos": [
+        811.5835571655277,
+        577.350959403229
+      ],
+      "size": {
+        "0": 400,
+        "1": 130
+      },
+      "flags": {
+        "collapsed": true
+      },
+      "order": 5,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 15
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            12
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CLIPTextEncode"
+      },
+      "widgets_values": [
+        "masterpiece, painting of Dresden at moonlight by Johan Christian Dahl, history painting, genre painting, Bernardo Bellotto, Thomas Cole, Hudson River School, Romantic oil painting, American Romanticism, german romanticism, , scenery, gothic landscape, water, scenery, dark matte oil painting, detailed\""
+      ],
+      "color": "#232",
+      "bgcolor": "#353"
+    },
+    {
+      "id": 39,
+      "type": "PreviewImage",
+      "pos": [
+        10,
+        780
+      ],
+      "size": {
+        "0": 310,
+        "1": 320
+      },
+      "flags": {},
+      "order": 8,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 52
+        }
+      ],
+      "title": "Preview - Step Start Loaded ",
+      "properties": {
+        "Node name for S&R": "PreviewImage"
+      },
+      "color": "#2a363b",
+      "bgcolor": "#3f5159"
+    },
+    {
+      "id": 23,
+      "type": "PreviewImage",
+      "pos": [
+        740,
+        750
+      ],
+      "size": {
+        "0": 410,
+        "1": 320
+      },
+      "flags": {},
+      "order": 15,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 47
+        }
+      ],
+      "title": "Preview - Inpainted end Frame",
+      "properties": {
+        "Node name for S&R": "PreviewImage"
+      },
+      "color": "#2a363b",
+      "bgcolor": "#3f5159"
+    },
+    {
+      "id": 34,
+      "type": "Save Infinite Parallax Step Components 🔹Elimination Nodes🔹",
+      "pos": [
+        730,
+        390
+      ],
+      "size": {
+        "0": 279.5999755859375,
+        "1": 46
+      },
+      "flags": {},
+      "order": 16,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "input_image",
+          "type": "IMAGE",
+          "link": 48
+        },
+        {
+          "name": "parallax_config",
+          "type": "parallax_config",
+          "link": 62
+        }
+      ],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": null,
+          "shape": 3
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Save Infinite Parallax Step Components 🔹Elimination Nodes🔹"
+      },
+      "color": "#46444a",
+      "bgcolor": "#323036"
+    },
+    {
+      "id": 54,
+      "type": "Create and Composite Layer VideoClips 🔹Elimination Nodes🔹",
+      "pos": [
+        1250,
+        660
+      ],
+      "size": {
+        "0": 370,
+        "1": 80
+      },
+      "flags": {},
+      "order": 17,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "parallax_config",
+          "type": "parallax_config",
+          "link": 67
+        },
+        {
+          "name": "parallax_end_frame",
+          "type": "IMAGE",
+          "link": 68
+        }
+      ],
+      "outputs": [
+        {
+          "name": "video_path",
+          "type": "STRING",
+          "links": [],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Create and Composite Layer VideoClips 🔹Elimination Nodes🔹"
+      },
+      "color": "#322",
+      "bgcolor": "#533"
+    },
+    {
+      "id": 59,
+      "type": "VHS_LoadVideo",
+      "pos": [
+        1650,
+        430
+      ],
+      "size": [
+        880,
+        240
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "batch_manager",
+          "type": "VHS_BatchManager",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": null,
+          "shape": 3
+        },
+        {
+          "name": "frame_count",
+          "type": "INT",
+          "links": null,
+          "shape": 3
+        },
+        {
+          "name": "audio",
+          "type": "VHS_AUDIO",
+          "links": null,
+          "shape": 3
+        }
+      ],
+      "title": "Preview Video 🎥🅥🅗🅢",
+      "properties": {
+        "Node name for S&R": "VHS_LoadVideo"
+      },
+      "widgets_values": {
+        "video": "parallax_video_0.mp4",
+        "force_rate": 0,
+        "force_size": "Disabled",
+        "custom_width": 512,
+        "custom_height": 512,
+        "frame_load_cap": 0,
+        "skip_first_frames": 0,
+        "select_every_nth": 1,
+        "choose video to upload": "image",
+        "videopreview": {
+          "hidden": false,
+          "paused": false,
+          "params": {
+            "frame_load_cap": 0,
+            "skip_first_frames": 0,
+            "force_rate": 0,
+            "filename": "parallax_video_0.mp4",
+            "type": "input",
+            "format": "video/mp4",
+            "select_every_nth": 1
+          }
+        }
+      }
+    }
+  ],
+  "links": [
+    [
+      12,
+      15,
+      0,
+      14,
+      0,
+      "CONDITIONING"
+    ],
+    [
+      13,
+      16,
+      0,
+      14,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      14,
+      17,
+      2,
+      14,
+      2,
+      "VAE"
+    ],
+    [
+      15,
+      17,
+      1,
+      15,
+      0,
+      "CLIP"
+    ],
+    [
+      16,
+      17,
+      1,
+      16,
+      0,
+      "CLIP"
+    ],
+    [
+      17,
+      14,
+      2,
+      18,
+      3,
+      "LATENT"
+    ],
+    [
+      18,
+      17,
+      0,
+      18,
+      0,
+      "MODEL"
+    ],
+    [
+      19,
+      14,
+      0,
+      18,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      20,
+      14,
+      1,
+      18,
+      2,
+      "CONDITIONING"
+    ],
+    [
+      21,
+      18,
+      0,
+      19,
+      0,
+      "LATENT"
+    ],
+    [
+      22,
+      17,
+      2,
+      19,
+      1,
+      "VAE"
+    ],
+    [
+      30,
+      22,
+      0,
+      24,
+      0,
+      "IMAGE"
+    ],
+    [
+      42,
+      33,
+      0,
+      14,
+      3,
+      "IMAGE"
+    ],
+    [
+      43,
+      33,
+      1,
+      14,
+      4,
+      "MASK"
+    ],
+    [
+      44,
+      33,
+      1,
+      22,
+      0,
+      "MASK"
+    ],
+    [
+      45,
+      33,
+      0,
+      11,
+      0,
+      "IMAGE"
+    ],
+    [
+      47,
+      19,
+      0,
+      23,
+      0,
+      "IMAGE"
+    ],
+    [
+      48,
+      19,
+      0,
+      34,
+      0,
+      "IMAGE"
+    ],
+    [
+      51,
+      38,
+      0,
+      33,
+      0,
+      "IMAGE"
+    ],
+    [
+      52,
+      38,
+      0,
+      39,
+      0,
+      "IMAGE"
+    ],
+    [
+      59,
+      46,
+      0,
+      38,
+      1,
+      "IMAGE"
+    ],
+    [
+      60,
+      47,
+      0,
+      38,
+      0,
+      "parallax_config"
+    ],
+    [
+      61,
+      47,
+      0,
+      33,
+      1,
+      "parallax_config"
+    ],
+    [
+      62,
+      47,
+      0,
+      34,
+      1,
+      "parallax_config"
+    ],
+    [
+      67,
+      47,
+      0,
+      54,
+      0,
+      "parallax_config"
+    ],
+    [
+      68,
+      19,
+      0,
+      54,
+      1,
+      "IMAGE"
+    ]
+  ],
+  "groups": [
+    {
+      "title": "Inpainting Shifted Regions",
+      "bounding": [
+        734,
+        460,
+        468,
+        239
+      ],
+      "color": "#3f789e",
+      "font_size": 24,
+      "locked": false
+    }
+  ],
+  "config": {},
+  "extra": {},
+  "version": 0.4
+}

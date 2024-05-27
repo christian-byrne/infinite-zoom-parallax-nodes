@@ -1,0 +1,948 @@
+{
+  "last_node_id": 27,
+  "last_link_id": 28,
+  "nodes": [
+    {
+      "id": 4,
+      "type": "PreviewImage",
+      "pos": [
+        210,
+        160
+      ],
+      "size": {
+        "0": 320,
+        "1": 250
+      },
+      "flags": {},
+      "order": 8,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 2
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "PreviewImage"
+      }
+    },
+    {
+      "id": 5,
+      "type": "MaskToImage",
+      "pos": [
+        -60,
+        620
+      ],
+      "size": {
+        "0": 210,
+        "1": 26
+      },
+      "flags": {},
+      "order": 11,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "mask",
+          "type": "MASK",
+          "link": 28
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            4
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "MaskToImage"
+      }
+    },
+    {
+      "id": 6,
+      "type": "PreviewImage",
+      "pos": [
+        210,
+        450
+      ],
+      "size": {
+        "0": 320,
+        "1": 260
+      },
+      "flags": {},
+      "order": 13,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 4
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "PreviewImage"
+      }
+    },
+    {
+      "id": 1,
+      "type": "LoadImage",
+      "pos": [
+        -1000,
+        330
+      ],
+      "size": {
+        "0": 320,
+        "1": 310
+      },
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            19
+          ],
+          "shape": 3,
+          "slot_index": 0
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null,
+          "shape": 3
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": [
+        "rgb-background-digital (2).jpg",
+        "image"
+      ]
+    },
+    {
+      "id": 12,
+      "type": "VAEDecode",
+      "pos": [
+        -150,
+        1220
+      ],
+      "size": {
+        "0": 210,
+        "1": 46
+      },
+      "flags": {
+        "collapsed": true
+      },
+      "order": 14,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "samples",
+          "type": "LATENT",
+          "link": 14
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 15
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            18,
+            21
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAEDecode"
+      }
+    },
+    {
+      "id": 19,
+      "type": "Save Image w/Metadata",
+      "pos": [
+        220,
+        800
+      ],
+      "size": {
+        "0": 400,
+        "1": 710
+      },
+      "flags": {},
+      "order": 16,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 21
+        },
+        {
+          "name": "path",
+          "type": "STRING",
+          "link": 22,
+          "widget": {
+            "name": "path"
+          }
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Save Image w/Metadata"
+      },
+      "widgets_values": [
+        "%time_%seed",
+        "",
+        "png",
+        45,
+        5,
+        "Stable-diffusion/inpainting/dreamshaper_8Inpainting.safetensors",
+        "euler",
+        "normal",
+        "unknown",
+        "unknown",
+        0,
+        512,
+        512,
+        true,
+        100,
+        0,
+        "%Y-%m-%d-%H%M%S"
+      ]
+    },
+    {
+      "id": 17,
+      "type": "Load Filetype by Mtime 🔹Elimination Nodes🔹",
+      "pos": [
+        -490,
+        710
+      ],
+      "size": {
+        "0": 315,
+        "1": 146
+      },
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "start_image",
+          "type": "IMAGE",
+          "link": 19
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            20
+          ],
+          "shape": 3,
+          "slot_index": 0
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null,
+          "shape": 3
+        },
+        {
+          "name": "file_path_string",
+          "type": "STRING",
+          "links": [
+            22
+          ],
+          "shape": 3,
+          "slot_index": 2
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Load Filetype by Mtime 🔹Elimination Nodes🔹"
+      },
+      "widgets_values": [
+        "/home/c_byrne/tools/sd/sd-interfaces/ComfyUI/output/test",
+        ".png",
+        true
+      ]
+    },
+    {
+      "id": 13,
+      "type": "PreviewImage",
+      "pos": [
+        -970,
+        860
+      ],
+      "size": {
+        "0": 420,
+        "1": 340
+      },
+      "flags": {},
+      "order": 15,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 18
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "PreviewImage"
+      }
+    },
+    {
+      "id": 25,
+      "type": "GrowMaskWithBlur",
+      "pos": [
+        -270,
+        -230
+      ],
+      "size": {
+        "0": 315,
+        "1": 222
+      },
+      "flags": {
+        "collapsed": false
+      },
+      "order": 1,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "mask",
+          "type": "MASK",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "mask",
+          "type": "MASK",
+          "links": [],
+          "shape": 3,
+          "slot_index": 0
+        },
+        {
+          "name": "mask_inverted",
+          "type": "MASK",
+          "links": null,
+          "shape": 3
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "GrowMaskWithBlur"
+      },
+      "widgets_values": [
+        20,
+        0,
+        false,
+        false,
+        0.25,
+        1,
+        1
+      ]
+    },
+    {
+      "id": 10,
+      "type": "CheckpointLoaderSimple",
+      "pos": [
+        -340,
+        1180
+      ],
+      "size": {
+        "0": 540,
+        "1": 100
+      },
+      "flags": {
+        "collapsed": true
+      },
+      "order": 2,
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            10
+          ],
+          "shape": 3,
+          "slot_index": 0
+        },
+        {
+          "name": "CLIP",
+          "type": "CLIP",
+          "links": [
+            8,
+            9
+          ],
+          "shape": 3,
+          "slot_index": 1
+        },
+        {
+          "name": "VAE",
+          "type": "VAE",
+          "links": [
+            7,
+            15
+          ],
+          "shape": 3,
+          "slot_index": 2
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CheckpointLoaderSimple"
+      },
+      "widgets_values": [
+        "Stable-diffusion/inpainting/colorful_inpaintingV31.safetensors"
+      ]
+    },
+    {
+      "id": 11,
+      "type": "KSampler",
+      "pos": [
+        -310,
+        1230
+      ],
+      "size": {
+        "0": 315,
+        "1": 262
+      },
+      "flags": {
+        "collapsed": true
+      },
+      "order": 12,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 10
+        },
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 11
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 12
+        },
+        {
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 13
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            14
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "KSampler"
+      },
+      "widgets_values": [
+        1087750442155404,
+        "randomize",
+        45,
+        3.5,
+        "dpmpp_2m_sde_gpu",
+        "karras",
+        0.9500000000000001
+      ]
+    },
+    {
+      "id": 26,
+      "type": "ImpactDilateMask",
+      "pos": [
+        -230,
+        110
+      ],
+      "size": {
+        "0": 315,
+        "1": 58
+      },
+      "flags": {},
+      "order": 9,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "mask",
+          "type": "MASK",
+          "link": 26
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": [
+            27,
+            28
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ImpactDilateMask"
+      },
+      "widgets_values": [
+        6
+      ]
+    },
+    {
+      "id": 3,
+      "type": "Shrink Inplace and Create Alpha Pad 🔹Elimination Nodes🔹",
+      "pos": [
+        -520,
+        270
+      ],
+      "size": {
+        "0": 405.5999755859375,
+        "1": 174
+      },
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "input_image",
+          "type": "IMAGE",
+          "link": 20
+        }
+      ],
+      "outputs": [
+        {
+          "name": "shrunk_image",
+          "type": "IMAGE",
+          "links": [
+            2,
+            16
+          ],
+          "shape": 3,
+          "slot_index": 0
+        },
+        {
+          "name": "mask_for_outpainting",
+          "type": "MASK",
+          "links": [
+            26
+          ],
+          "shape": 3,
+          "slot_index": 1
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Shrink Inplace and Create Alpha Pad 🔹Elimination Nodes🔹"
+      },
+      "widgets_values": [
+        16,
+        32,
+        64,
+        64,
+        1
+      ]
+    },
+    {
+      "id": 7,
+      "type": "InpaintModelConditioning",
+      "pos": [
+        -160,
+        1180
+      ],
+      "size": {
+        "0": 216.59999084472656,
+        "1": 106
+      },
+      "flags": {
+        "collapsed": true
+      },
+      "order": 10,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 5
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 6
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 7
+        },
+        {
+          "name": "pixels",
+          "type": "IMAGE",
+          "link": 16
+        },
+        {
+          "name": "mask",
+          "type": "MASK",
+          "link": 27
+        }
+      ],
+      "outputs": [
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "links": [
+            11
+          ],
+          "shape": 3,
+          "slot_index": 0
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "links": [
+            12
+          ],
+          "shape": 3,
+          "slot_index": 1
+        },
+        {
+          "name": "latent",
+          "type": "LATENT",
+          "links": [
+            13
+          ],
+          "shape": 3,
+          "slot_index": 2
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "InpaintModelConditioning"
+      }
+    },
+    {
+      "id": 8,
+      "type": "CLIPTextEncode",
+      "pos": [
+        -280,
+        1130
+      ],
+      "size": {
+        "0": 400,
+        "1": 130
+      },
+      "flags": {
+        "collapsed": true
+      },
+      "order": 5,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 8
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            5
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CLIPTextEncode"
+      },
+      "widgets_values": [
+        "anime, hand-drawn and cel animation techniques, [your subject here], natural design, beautifully rendered and expressive rich colors, vibrant pastel colors, imaginative and fantastical landscapes, sharp attention to detail, realism and a strong sense of nostalgia and warmth, sharp attention to small details and textures, fantastical creatures, settings, depth and emotions emphasized and accentuated by lighting and shading, extremely high quality, incredibly high finite definition, high resolution, hand-drawn and cel animation techniques, anime"
+      ],
+      "color": "#232",
+      "bgcolor": "#353"
+    },
+    {
+      "id": 9,
+      "type": "CLIPTextEncode",
+      "pos": [
+        -280,
+        1090
+      ],
+      "size": {
+        "0": 380,
+        "1": 130
+      },
+      "flags": {
+        "collapsed": true
+      },
+      "order": 6,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 9
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            6
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CLIPTextEncode"
+      },
+      "widgets_values": [
+        "embedding:embeddings/NegativeDynamics-neg, embedding:embeddings/ng_deepnegative_v1_75t, "
+      ],
+      "color": "#322",
+      "bgcolor": "#533"
+    },
+    {
+      "id": 27,
+      "type": "Note",
+      "pos": [
+        -620,
+        1430
+      ],
+      "size": [
+        730,
+        100
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "properties": {
+        "text": ""
+      },
+      "widgets_values": [
+        "prompt source: https://old.reddit.com/r/midjourney/comments/10y8huj/heres_the_prompt_for_all_to_use_that_allows_you/\n\nproject dir: /home/c_byrne/tools/sd/sd-interfaces/ComfyUI/output/test"
+      ],
+      "color": "#432",
+      "bgcolor": "#653"
+    }
+  ],
+  "links": [
+    [
+      2,
+      3,
+      0,
+      4,
+      0,
+      "IMAGE"
+    ],
+    [
+      4,
+      5,
+      0,
+      6,
+      0,
+      "IMAGE"
+    ],
+    [
+      5,
+      8,
+      0,
+      7,
+      0,
+      "CONDITIONING"
+    ],
+    [
+      6,
+      9,
+      0,
+      7,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      7,
+      10,
+      2,
+      7,
+      2,
+      "VAE"
+    ],
+    [
+      8,
+      10,
+      1,
+      8,
+      0,
+      "CLIP"
+    ],
+    [
+      9,
+      10,
+      1,
+      9,
+      0,
+      "CLIP"
+    ],
+    [
+      10,
+      10,
+      0,
+      11,
+      0,
+      "MODEL"
+    ],
+    [
+      11,
+      7,
+      0,
+      11,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      12,
+      7,
+      1,
+      11,
+      2,
+      "CONDITIONING"
+    ],
+    [
+      13,
+      7,
+      2,
+      11,
+      3,
+      "LATENT"
+    ],
+    [
+      14,
+      11,
+      0,
+      12,
+      0,
+      "LATENT"
+    ],
+    [
+      15,
+      10,
+      2,
+      12,
+      1,
+      "VAE"
+    ],
+    [
+      16,
+      3,
+      0,
+      7,
+      3,
+      "IMAGE"
+    ],
+    [
+      18,
+      12,
+      0,
+      13,
+      0,
+      "IMAGE"
+    ],
+    [
+      19,
+      1,
+      0,
+      17,
+      0,
+      "IMAGE"
+    ],
+    [
+      20,
+      17,
+      0,
+      3,
+      0,
+      "IMAGE"
+    ],
+    [
+      21,
+      12,
+      0,
+      19,
+      0,
+      "IMAGE"
+    ],
+    [
+      22,
+      17,
+      2,
+      19,
+      1,
+      "STRING"
+    ],
+    [
+      26,
+      3,
+      1,
+      26,
+      0,
+      "MASK"
+    ],
+    [
+      27,
+      26,
+      0,
+      7,
+      4,
+      "MASK"
+    ],
+    [
+      28,
+      26,
+      0,
+      5,
+      0,
+      "MASK"
+    ]
+  ],
+  "groups": [
+    {
+      "title": "Inpainting",
+      "bounding": [
+        -466,
+        946,
+        613,
+        403
+      ],
+      "color": "#3f789e",
+      "font_size": 24,
+      "locked": false
+    }
+  ],
+  "config": {},
+  "extra": {},
+  "version": 0.4
+}
