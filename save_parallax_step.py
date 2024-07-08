@@ -1,7 +1,4 @@
 import os
-import sys
-
-sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 import json
 import torch
 from torchvision import transforms
@@ -10,12 +7,15 @@ from .utils.tensor_utils import TensorImgUtils
 
 from typing import Tuple
 
+import folder_paths
+
 
 class SaveParallaxStepNode:
     RETURN_TYPES = ("STRING",)
     RETURN_NAMES = ("save_path_str",)
     FUNCTION = "main"
     OUTPUT_NODE = True
+    CATEGORY = "infinite/parallax"
 
     @classmethod
     def INPUT_TYPES(s):
@@ -31,14 +31,11 @@ class SaveParallaxStepNode:
         input_image: torch.Tensor,  # [Batch_n, H, W, 3-channel]
         parallax_config: str,  # json string
     ) -> Tuple[str, ...]:
-
-        # parallax_config json string to dict
         parallax_config = json.loads(parallax_config)
-
-        # get path of node dir
-        this_path = os.path.dirname(os.path.abspath(__file__))
-        # get and create path to the parallax project dir
-        output_path = os.path.join(this_path, parallax_config["unique_project_name"])
+        output_dir = folder_paths.get_output_directory()
+        output_path = os.path.join(
+            output_dir, f"infinite_parallax-{parallax_config['unique_project_name']}"
+        )
         os.makedirs(output_path, exist_ok=True)
 
         def last_num(str):
@@ -59,7 +56,6 @@ class SaveParallaxStepNode:
 
         to_pil = transforms.ToPILImage()
 
-        # squeeze batch dimension
         input_image = TensorImgUtils.test_squeeze_batch(input_image)
 
         # start by saving the entire image - to serve as the start image of the next step

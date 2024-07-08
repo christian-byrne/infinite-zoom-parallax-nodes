@@ -1,6 +1,5 @@
 import torch
 from torchvision import transforms
-from termcolor import colored
 
 from ..utils.tensor_utils import TensorImgUtils
 
@@ -14,6 +13,7 @@ class ShrinkAndAlphaPadNode:
     )
     RETURN_NAMES = ("shrunk_padded_image", "mask_for_outpainting")
     FUNCTION = "main"
+    CATEGORY = "infinite/parallax"
 
     @classmethod
     def INPUT_TYPES(s):
@@ -123,12 +123,6 @@ class ShrinkAndAlphaPadNode:
             left_margin = (
                 input_image.shape[1] - shrunk_image.shape[1]
             ) - velocity_right
-        print(
-            colored(
-                f"left_margin: {left_margin}, right_margin: {right_margin}",
-                "light_green",
-            )
-        )
         if velocity_top > velocity_bottom or remove_horizontal > remove_vertical:
             top_margin = velocity_top
             bottom_margin = (
@@ -139,12 +133,6 @@ class ShrinkAndAlphaPadNode:
             top_margin = (
                 input_image.shape[0] - shrunk_image.shape[0]
             ) - velocity_bottom
-        print(
-            colored(
-                f"top_margin: {top_margin}, bottom_margin: {bottom_margin}",
-                "light_green",
-            )
-        )
 
         # To simply center the image, use the following line instead
         # input_image[remove_top:-remove_bottom, remove_left:-remove_right, :] = shrunk_image

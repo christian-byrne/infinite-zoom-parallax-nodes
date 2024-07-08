@@ -1,0 +1,2366 @@
+{
+  "last_node_id": 184,
+  "last_link_id": 374,
+  "nodes": [
+    {
+      "id": 112,
+      "type": "CheckpointLoaderSimple",
+      "pos": [
+        856.0001220703125,
+        906.7999877929688
+      ],
+      "size": {
+        "0": 315,
+        "1": 98
+      },
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            243
+          ],
+          "slot_index": 0
+        },
+        {
+          "name": "CLIP",
+          "type": "CLIP",
+          "links": [
+            247,
+            248
+          ],
+          "slot_index": 1
+        },
+        {
+          "name": "VAE",
+          "type": "VAE",
+          "links": [
+            250,
+            252
+          ],
+          "slot_index": 2
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CheckpointLoaderSimple"
+      },
+      "widgets_values": [
+        "experience_70-inpainting.safetensors"
+      ]
+    },
+    {
+      "id": 114,
+      "type": "CLIPTextEncode",
+      "pos": [
+        766.0001220703125,
+        1066.7999877929688
+      ],
+      "size": {
+        "0": 422.84503173828125,
+        "1": 164.31304931640625
+      },
+      "flags": {},
+      "order": 16,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 247
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            253
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CLIPTextEncode"
+      },
+      "widgets_values": [
+        "masterpiece, moonlight, gothic landscape, river, scenery, Johan Christian Dahl, Bernardo Bellotto, Thomas Cole, Hudson River School, American Romanticism, german romanticism, oil painting, dark matte, detailed"
+      ]
+    },
+    {
+      "id": 129,
+      "type": "GetNode",
+      "pos": [
+        1698.5999755859375,
+        2096
+      ],
+      "size": {
+        "0": 210,
+        "1": 58
+      },
+      "flags": {
+        "collapsed": true
+      },
+      "order": 1,
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "parallax_config",
+          "type": "parallax_config",
+          "links": [
+            275
+          ],
+          "slot_index": 0
+        }
+      ],
+      "title": "Get_parallax_config",
+      "properties": {},
+      "widgets_values": [
+        "parallax_config"
+      ]
+    },
+    {
+      "id": 115,
+      "type": "CLIPTextEncode",
+      "pos": [
+        766.0001220703125,
+        1286.7999877929688
+      ],
+      "size": {
+        "0": 425.27801513671875,
+        "1": 180.6060791015625
+      },
+      "flags": {},
+      "order": 17,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 248
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            254
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CLIPTextEncode"
+      },
+      "widgets_values": [
+        "text, watermark, blurry, low resolution"
+      ]
+    },
+    {
+      "id": 133,
+      "type": "PreviewImage",
+      "pos": [
+        -1645.348551782932,
+        1735.9084806761139
+      ],
+      "size": {
+        "0": 315.15985107421875,
+        "1": 284.8188781738281
+      },
+      "flags": {},
+      "order": 36,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 278
+        }
+      ],
+      "title": "Preview Image - Shifted Layers Mask",
+      "properties": {
+        "Node name for S&R": "PreviewImage"
+      }
+    },
+    {
+      "id": 108,
+      "type": "PreviewImage",
+      "pos": [
+        -2018.3485517829317,
+        1733.9084806761139
+      ],
+      "size": {
+        "0": 315.15985107421875,
+        "1": 284.8188781738281
+      },
+      "flags": {},
+      "order": 28,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 365
+        }
+      ],
+      "title": "Preview Image - Shifted Layers",
+      "properties": {
+        "Node name for S&R": "PreviewImage"
+      }
+    },
+    {
+      "id": 120,
+      "type": "FeatherMask",
+      "pos": [
+        -1167.162689636936,
+        1245.7867604985015
+      ],
+      "size": {
+        "0": 315,
+        "1": 130
+      },
+      "flags": {},
+      "order": 35,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "mask",
+          "type": "MASK",
+          "link": 265
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": [
+            261
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "FeatherMask"
+      },
+      "widgets_values": [
+        12,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "id": 126,
+      "type": "SetNode",
+      "pos": [
+        -2980.9797739948945,
+        1262.8653081419918
+      ],
+      "size": {
+        "0": 210,
+        "1": 58
+      },
+      "flags": {
+        "collapsed": true
+      },
+      "order": 21,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "parallax_config",
+          "type": "parallax_config",
+          "link": 279
+        }
+      ],
+      "outputs": [
+        {
+          "name": "*",
+          "type": "*",
+          "links": null
+        }
+      ],
+      "title": "Set_parallax_config",
+      "properties": {
+        "previousName": "parallax_config"
+      },
+      "widgets_values": [
+        "parallax_config"
+      ]
+    },
+    {
+      "id": 143,
+      "type": "Note",
+      "pos": [
+        -4792.691513517084,
+        707.3228567977623
+      ],
+      "size": {
+        "0": 320.66357421875,
+        "1": 78.74227142333984
+      },
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "properties": {
+        "text": ""
+      },
+      "widgets_values": [
+        "These objects will not move in the final video - they are static"
+      ],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 137,
+      "type": "LoadImage",
+      "pos": [
+        -4726.691513517082,
+        905.3228567977603
+      ],
+      "size": {
+        "0": 315,
+        "1": 314.00006103515625
+      },
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            281
+          ],
+          "shape": 3,
+          "slot_index": 0
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null,
+          "shape": 3
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": [
+        "mask-edited.png",
+        "image"
+      ]
+    },
+    {
+      "id": 151,
+      "type": "SetNode",
+      "pos": [
+        -3964.5214082267603,
+        864.3854333948111
+      ],
+      "size": {
+        "0": 210,
+        "1": 58
+      },
+      "flags": {
+        "collapsed": true
+      },
+      "order": 23,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "link": 299
+        }
+      ],
+      "outputs": [
+        {
+          "name": "*",
+          "type": "*",
+          "links": null
+        }
+      ],
+      "title": "Set_static_objects_mask",
+      "properties": {
+        "previousName": "static_objects_mask"
+      },
+      "widgets_values": [
+        "static_objects_mask"
+      ]
+    },
+    {
+      "id": 138,
+      "type": "ImageToMask",
+      "pos": [
+        -4352.691513517082,
+        926.3228567977602
+      ],
+      "size": {
+        "0": 315,
+        "1": 58
+      },
+      "flags": {},
+      "order": 18,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 281
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": [
+            299,
+            301
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ImageToMask"
+      },
+      "widgets_values": [
+        "red"
+      ]
+    },
+    {
+      "id": 119,
+      "type": "GrowMask",
+      "pos": [
+        -1557.1626896369357,
+        1257.7867604985015
+      ],
+      "size": {
+        "0": 315,
+        "1": 82
+      },
+      "flags": {},
+      "order": 29,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "mask",
+          "type": "MASK",
+          "link": 363
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": [
+            265
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "GrowMask"
+      },
+      "widgets_values": [
+        6,
+        false
+      ]
+    },
+    {
+      "id": 153,
+      "type": "InvertMask",
+      "pos": [
+        -4302.521408226757,
+        1091.3854333948102
+      ],
+      "size": {
+        "0": 210,
+        "1": 26
+      },
+      "flags": {},
+      "order": 24,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "mask",
+          "type": "MASK",
+          "link": 301
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": [
+            310
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "InvertMask"
+      }
+    },
+    {
+      "id": 161,
+      "type": "GrowMask",
+      "pos": [
+        -4344.521408226757,
+        1243.3854333948102
+      ],
+      "size": {
+        "0": 315,
+        "1": 82
+      },
+      "flags": {},
+      "order": 27,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "mask",
+          "type": "MASK",
+          "link": 310
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": [
+            309
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "GrowMask"
+      },
+      "widgets_values": [
+        6,
+        false
+      ]
+    },
+    {
+      "id": 162,
+      "type": "FeatherMask",
+      "pos": [
+        -3973.5214082267603,
+        1261.3854333948102
+      ],
+      "size": {
+        "0": 315,
+        "1": 130
+      },
+      "flags": {},
+      "order": 34,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "mask",
+          "type": "MASK",
+          "link": 309
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": [],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "FeatherMask"
+      },
+      "widgets_values": [
+        12,
+        12,
+        12,
+        12
+      ]
+    },
+    {
+      "id": 168,
+      "type": "SetNode",
+      "pos": [
+        -3938,
+        1718
+      ],
+      "size": {
+        "0": 210,
+        "1": 58
+      },
+      "flags": {
+        "collapsed": true
+      },
+      "order": 19,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "link": 331
+        }
+      ],
+      "outputs": [
+        {
+          "name": "*",
+          "type": "*",
+          "links": null
+        }
+      ],
+      "title": "Set_start_image",
+      "properties": {
+        "previousName": "start_image"
+      },
+      "widgets_values": [
+        "start_image"
+      ]
+    },
+    {
+      "id": 109,
+      "type": "MaskToImage",
+      "pos": [
+        -1643,
+        1688
+      ],
+      "size": {
+        "0": 207.159912109375,
+        "1": 26
+      },
+      "flags": {
+        "collapsed": true
+      },
+      "order": 30,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "mask",
+          "type": "MASK",
+          "link": 364
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            278
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "MaskToImage"
+      }
+    },
+    {
+      "id": 173,
+      "type": "InvertMask",
+      "pos": [
+        -1093,
+        1682
+      ],
+      "size": {
+        "0": 210,
+        "1": 26
+      },
+      "flags": {},
+      "order": 4,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "mask",
+          "type": "MASK",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": [],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "InvertMask"
+      }
+    },
+    {
+      "id": 174,
+      "type": "MaskToImage",
+      "pos": [
+        -1086,
+        1769
+      ],
+      "size": {
+        "0": 207.159912109375,
+        "1": 26
+      },
+      "flags": {
+        "collapsed": false
+      },
+      "order": 31,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "mask",
+          "type": "MASK",
+          "link": 366
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            339
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "MaskToImage"
+      }
+    },
+    {
+      "id": 171,
+      "type": "ImageBlend",
+      "pos": [
+        -380,
+        1750
+      ],
+      "size": {
+        "0": 315,
+        "1": 102
+      },
+      "flags": {},
+      "order": 38,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image1",
+          "type": "IMAGE",
+          "link": 339
+        },
+        {
+          "name": "image2",
+          "type": "IMAGE",
+          "link": 335
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            336
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ImageBlend"
+      },
+      "widgets_values": [
+        1,
+        "multiply"
+      ]
+    },
+    {
+      "id": 172,
+      "type": "PreviewImage",
+      "pos": [
+        -120,
+        1910
+      ],
+      "size": {
+        "0": 319.20001220703125,
+        "1": 264.0762939453125
+      },
+      "flags": {},
+      "order": 40,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 336
+        }
+      ],
+      "title": "Preview Image - Inpaint Target Regions",
+      "properties": {
+        "Node name for S&R": "PreviewImage"
+      }
+    },
+    {
+      "id": 118,
+      "type": "InpaintModelConditioning",
+      "pos": [
+        826.0001220703125,
+        1586.7999877929688
+      ],
+      "size": {
+        "0": 216.59999084472656,
+        "1": 106
+      },
+      "flags": {},
+      "order": 39,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 253
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 254
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 252
+        },
+        {
+          "name": "pixels",
+          "type": "IMAGE",
+          "link": 370
+        },
+        {
+          "name": "mask",
+          "type": "MASK",
+          "link": 261
+        }
+      ],
+      "outputs": [
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "links": [
+            257
+          ],
+          "shape": 3,
+          "slot_index": 0
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "links": [
+            259
+          ],
+          "shape": 3,
+          "slot_index": 1
+        },
+        {
+          "name": "latent",
+          "type": "LATENT",
+          "links": [
+            258
+          ],
+          "shape": 3,
+          "slot_index": 2
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "InpaintModelConditioning"
+      }
+    },
+    {
+      "id": 111,
+      "type": "KSampler",
+      "pos": [
+        1195.0001220703125,
+        1524.7999877929688
+      ],
+      "size": {
+        "0": 315,
+        "1": 262
+      },
+      "flags": {},
+      "order": 41,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 243
+        },
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 257
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 259
+        },
+        {
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 258
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            249
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "KSampler"
+      },
+      "widgets_values": [
+        212681377186972,
+        "randomize",
+        30,
+        4.5,
+        "dpmpp_2m_sde_gpu",
+        "normal",
+        1
+      ]
+    },
+    {
+      "id": 176,
+      "type": "PreviewImage",
+      "pos": [
+        1500.0001220703125,
+        2103.7999877929688
+      ],
+      "size": {
+        "0": 390.721923828125,
+        "1": 306.7571105957031
+      },
+      "flags": {},
+      "order": 48,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 347
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "PreviewImage"
+      }
+    },
+    {
+      "id": 170,
+      "type": "PreviewImage",
+      "pos": [
+        220,
+        1910
+      ],
+      "size": {
+        "0": 308.4172058105469,
+        "1": 271.4482116699219
+      },
+      "flags": {},
+      "order": 37,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 333
+        }
+      ],
+      "title": "Preview Image - Inpaint Base Image",
+      "properties": {
+        "Node name for S&R": "PreviewImage"
+      }
+    },
+    {
+      "id": 175,
+      "type": "PreviewImage",
+      "pos": [
+        816.0001220703125,
+        2056.7999877929688
+      ],
+      "size": {
+        "0": 378.314697265625,
+        "1": 376.000244140625
+      },
+      "flags": {},
+      "order": 46,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 340
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "PreviewImage"
+      }
+    },
+    {
+      "id": 106,
+      "type": "LoadImage",
+      "pos": [
+        -4497,
+        1782
+      ],
+      "size": {
+        "0": 504.1542663574219,
+        "1": 543.0114135742188
+      },
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            312,
+            331
+          ],
+          "shape": 3,
+          "slot_index": 0
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null,
+          "shape": 3
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": [
+        "start-image.png",
+        "image"
+      ]
+    },
+    {
+      "id": 167,
+      "type": "GetNode",
+      "pos": [
+        -510,
+        1530
+      ],
+      "size": {
+        "0": 210,
+        "1": 58
+      },
+      "flags": {
+        "collapsed": false
+      },
+      "order": 6,
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": [
+            355
+          ],
+          "slot_index": 0
+        }
+      ],
+      "title": "Get_static_objects_mask",
+      "properties": {},
+      "widgets_values": [
+        "static_objects_mask"
+      ]
+    },
+    {
+      "id": 123,
+      "type": "Load Parallax Frame",
+      "pos": [
+        -2852.9570909978993,
+        1657.7827606087124
+      ],
+      "size": {
+        "0": 304,
+        "1": 59.65584945678711
+      },
+      "flags": {},
+      "order": 22,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "parallax_config",
+          "type": "parallax_config",
+          "link": 280
+        },
+        {
+          "name": "start_image",
+          "type": "IMAGE",
+          "link": 312
+        }
+      ],
+      "outputs": [
+        {
+          "name": "parallax_start_frame",
+          "type": "IMAGE",
+          "links": [
+            305,
+            360
+          ],
+          "shape": 3,
+          "slot_index": 0
+        },
+        {
+          "name": "optional_mask",
+          "type": "MASK",
+          "links": null,
+          "shape": 3
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Load Parallax Frame"
+      }
+    },
+    {
+      "id": 163,
+      "type": "GetNode",
+      "pos": [
+        -2229,
+        1341
+      ],
+      "size": {
+        "0": 210,
+        "1": 58
+      },
+      "flags": {
+        "collapsed": false
+      },
+      "order": 7,
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": [
+            362
+          ],
+          "slot_index": 0
+        }
+      ],
+      "title": "Get_static_objects_mask",
+      "properties": {},
+      "widgets_values": [
+        "static_objects_mask"
+      ]
+    },
+    {
+      "id": 184,
+      "type": "PreviewImage",
+      "pos": [
+        -1282,
+        1468
+      ],
+      "size": {
+        "0": 210,
+        "1": 246
+      },
+      "flags": {},
+      "order": 32,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 368
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "PreviewImage"
+      }
+    },
+    {
+      "id": 182,
+      "type": "InvertMask",
+      "pos": [
+        -290,
+        1570
+      ],
+      "size": {
+        "0": 210,
+        "1": 26
+      },
+      "flags": {},
+      "order": 20,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "mask",
+          "type": "MASK",
+          "link": 355
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": [
+            356
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "InvertMask"
+      }
+    },
+    {
+      "id": 127,
+      "type": "GetNode",
+      "pos": [
+        -2219.7930914313683,
+        1218.1002010807767
+      ],
+      "size": {
+        "0": 210,
+        "1": 58
+      },
+      "flags": {
+        "collapsed": false
+      },
+      "order": 8,
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "parallax_config",
+          "type": "parallax_config",
+          "links": [
+            361
+          ],
+          "slot_index": 0
+        }
+      ],
+      "title": "Get_parallax_config",
+      "properties": {},
+      "widgets_values": [
+        "parallax_config"
+      ]
+    },
+    {
+      "id": 155,
+      "type": "PreviewImage",
+      "pos": [
+        -2911,
+        1798
+      ],
+      "size": {
+        "0": 426.73870849609375,
+        "1": 355.18255615234375
+      },
+      "flags": {},
+      "order": 25,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 305
+        }
+      ],
+      "title": "Preview Image - Current Frame",
+      "properties": {
+        "Node name for S&R": "PreviewImage"
+      }
+    },
+    {
+      "id": 169,
+      "type": "GetNode",
+      "pos": [
+        -490,
+        1350
+      ],
+      "size": {
+        "0": 210,
+        "1": 58
+      },
+      "flags": {
+        "collapsed": false
+      },
+      "order": 9,
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            358
+          ],
+          "slot_index": 0
+        }
+      ],
+      "title": "Get_start_image",
+      "properties": {},
+      "widgets_values": [
+        "start_image"
+      ]
+    },
+    {
+      "id": 183,
+      "type": "Layer Shifter for Parallax Outpainting",
+      "pos": [
+        -1956,
+        1466
+      ],
+      "size": {
+        "0": 430.8000183105469,
+        "1": 126
+      },
+      "flags": {},
+      "order": 26,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "input_image",
+          "type": "IMAGE",
+          "link": 360
+        },
+        {
+          "name": "parallax_config",
+          "type": "parallax_config",
+          "link": 361
+        },
+        {
+          "name": "static_objects_mask",
+          "type": "MASK",
+          "link": 362
+        },
+        {
+          "name": "object_mask_1",
+          "type": "MASK",
+          "link": null
+        },
+        {
+          "name": "object_mask_2",
+          "type": "MASK",
+          "link": null
+        },
+        {
+          "name": "object_mask_3",
+          "type": "MASK",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "shifted_image",
+          "type": "IMAGE",
+          "links": [
+            365
+          ],
+          "shape": 3,
+          "slot_index": 0
+        },
+        {
+          "name": "shifted_mask",
+          "type": "MASK",
+          "links": [
+            363,
+            364,
+            366
+          ],
+          "shape": 3,
+          "slot_index": 1
+        },
+        {
+          "name": "inpaint_target",
+          "type": "IMAGE",
+          "links": [
+            368,
+            369,
+            370
+          ],
+          "shape": 3,
+          "slot_index": 2
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Layer Shifter for Parallax Outpainting"
+      }
+    },
+    {
+      "id": 144,
+      "type": "Create Parallax Video",
+      "pos": [
+        2566.7894816589355,
+        1672.287336700439
+      ],
+      "size": {
+        "0": 506.4000244140625,
+        "1": 66
+      },
+      "flags": {},
+      "order": 45,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "parallax_config",
+          "type": "parallax_config",
+          "link": 283
+        },
+        {
+          "name": "parallax_end_frame",
+          "type": "IMAGE",
+          "link": 285
+        },
+        {
+          "name": "static_objects_mask",
+          "type": "MASK",
+          "link": 300
+        }
+      ],
+      "outputs": [
+        {
+          "name": "saved_video_path_str",
+          "type": "STRING",
+          "links": null,
+          "shape": 3
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Create Parallax Video"
+      }
+    },
+    {
+      "id": 125,
+      "type": "PreviewImage",
+      "pos": [
+        2420.7894816589355,
+        1944.287336700439
+      ],
+      "size": {
+        "0": 672.0401000976562,
+        "1": 422.586669921875
+      },
+      "flags": {},
+      "order": 43,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 269
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "PreviewImage"
+      }
+    },
+    {
+      "id": 152,
+      "type": "GetNode",
+      "pos": [
+        2311.7894816589355,
+        1837.287336700439
+      ],
+      "size": {
+        "0": 210,
+        "1": 58
+      },
+      "flags": {
+        "collapsed": true
+      },
+      "order": 10,
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": [
+            300
+          ],
+          "slot_index": 0
+        }
+      ],
+      "title": "Get_static_objects_mask",
+      "properties": {},
+      "widgets_values": [
+        "static_objects_mask"
+      ]
+    },
+    {
+      "id": 122,
+      "type": "Save Parallax Frame",
+      "pos": [
+        2222.7894816589355,
+        1514.287336700439
+      ],
+      "size": {
+        "0": 427.6883544921875,
+        "1": 76.34269714355469
+      },
+      "flags": {},
+      "order": 44,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "input_image",
+          "type": "IMAGE",
+          "link": 270
+        },
+        {
+          "name": "parallax_config",
+          "type": "parallax_config",
+          "link": 275
+        }
+      ],
+      "outputs": [
+        {
+          "name": "save_path_str",
+          "type": "STRING",
+          "links": null,
+          "shape": 3
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Save Parallax Frame"
+      }
+    },
+    {
+      "id": 128,
+      "type": "GetNode",
+      "pos": [
+        2312.9931062866212,
+        1759.5295083801268
+      ],
+      "size": {
+        "0": 210,
+        "1": 58
+      },
+      "flags": {
+        "collapsed": true
+      },
+      "order": 11,
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "parallax_config",
+          "type": "parallax_config",
+          "links": [
+            283
+          ],
+          "slot_index": 0
+        }
+      ],
+      "title": "Get_parallax_config",
+      "properties": {},
+      "widgets_values": [
+        "parallax_config"
+      ]
+    },
+    {
+      "id": 131,
+      "type": "Note",
+      "pos": [
+        2710,
+        1493
+      ],
+      "size": {
+        "0": 282.0841369628906,
+        "1": 95.59454345703125
+      },
+      "flags": {},
+      "order": 12,
+      "mode": 0,
+      "properties": {
+        "text": ""
+      },
+      "widgets_values": [
+        "If an output is bad, delete the most recent image in save_path_str directory"
+      ],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 166,
+      "type": "ImageCompositeMasked",
+      "pos": [
+        -70,
+        1310
+      ],
+      "size": {
+        "0": 315,
+        "1": 146
+      },
+      "flags": {},
+      "order": 33,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "destination",
+          "type": "IMAGE",
+          "link": 358
+        },
+        {
+          "name": "source",
+          "type": "IMAGE",
+          "link": 369
+        },
+        {
+          "name": "mask",
+          "type": "MASK",
+          "link": 356
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            333,
+            335
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ImageCompositeMasked"
+      },
+      "widgets_values": [
+        0,
+        0,
+        false
+      ]
+    },
+    {
+      "id": 178,
+      "type": "GetNode",
+      "pos": [
+        1167,
+        1933
+      ],
+      "size": {
+        "0": 210,
+        "1": 58
+      },
+      "flags": {
+        "collapsed": true
+      },
+      "order": 13,
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": [
+            371
+          ],
+          "slot_index": 0
+        }
+      ],
+      "title": "Get_static_objects_mask",
+      "properties": {},
+      "widgets_values": [
+        "static_objects_mask"
+      ]
+    },
+    {
+      "id": 135,
+      "type": "Parallax Config",
+      "pos": [
+        -3381,
+        1253
+      ],
+      "size": {
+        "0": 315,
+        "1": 442
+      },
+      "flags": {},
+      "order": 14,
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "parallax_config",
+          "type": "parallax_config",
+          "links": [
+            279,
+            280
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Parallax Config"
+      },
+      "widgets_values": [
+        "sp",
+        3,
+        0.23361,
+        189,
+        100,
+        142,
+        22,
+        900,
+        12,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "id": 177,
+      "type": "ImageCompositeMasked",
+      "pos": [
+        1494.0001220703125,
+        1891.7999877929688
+      ],
+      "size": {
+        "0": 315,
+        "1": 146
+      },
+      "flags": {},
+      "order": 47,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "destination",
+          "type": "IMAGE",
+          "link": 374
+        },
+        {
+          "name": "source",
+          "type": "IMAGE",
+          "link": 373
+        },
+        {
+          "name": "mask",
+          "type": "MASK",
+          "link": 371
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            347
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ImageCompositeMasked"
+      },
+      "widgets_values": [
+        0,
+        0,
+        false
+      ]
+    },
+    {
+      "id": 179,
+      "type": "GetNode",
+      "pos": [
+        1220,
+        1999
+      ],
+      "size": {
+        "0": 210,
+        "1": 58
+      },
+      "flags": {
+        "collapsed": true
+      },
+      "order": 15,
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            373
+          ],
+          "slot_index": 0
+        }
+      ],
+      "title": "Get_start_image",
+      "properties": {},
+      "widgets_values": [
+        "start_image"
+      ]
+    },
+    {
+      "id": 116,
+      "type": "VAEDecode",
+      "pos": [
+        1596.0001220703125,
+        1551.7999877929688
+      ],
+      "size": {
+        "0": 210,
+        "1": 46
+      },
+      "flags": {},
+      "order": 42,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "samples",
+          "type": "LATENT",
+          "link": 249
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 250
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            269,
+            270,
+            285,
+            340,
+            374
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAEDecode"
+      }
+    }
+  ],
+  "links": [
+    [
+      243,
+      112,
+      0,
+      111,
+      0,
+      "MODEL"
+    ],
+    [
+      247,
+      112,
+      1,
+      114,
+      0,
+      "CLIP"
+    ],
+    [
+      248,
+      112,
+      1,
+      115,
+      0,
+      "CLIP"
+    ],
+    [
+      249,
+      111,
+      0,
+      116,
+      0,
+      "LATENT"
+    ],
+    [
+      250,
+      112,
+      2,
+      116,
+      1,
+      "VAE"
+    ],
+    [
+      252,
+      112,
+      2,
+      118,
+      2,
+      "VAE"
+    ],
+    [
+      253,
+      114,
+      0,
+      118,
+      0,
+      "CONDITIONING"
+    ],
+    [
+      254,
+      115,
+      0,
+      118,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      257,
+      118,
+      0,
+      111,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      258,
+      118,
+      2,
+      111,
+      3,
+      "LATENT"
+    ],
+    [
+      259,
+      118,
+      1,
+      111,
+      2,
+      "CONDITIONING"
+    ],
+    [
+      261,
+      120,
+      0,
+      118,
+      4,
+      "MASK"
+    ],
+    [
+      265,
+      119,
+      0,
+      120,
+      0,
+      "MASK"
+    ],
+    [
+      269,
+      116,
+      0,
+      125,
+      0,
+      "IMAGE"
+    ],
+    [
+      270,
+      116,
+      0,
+      122,
+      0,
+      "IMAGE"
+    ],
+    [
+      275,
+      129,
+      0,
+      122,
+      1,
+      "parallax_config"
+    ],
+    [
+      278,
+      109,
+      0,
+      133,
+      0,
+      "IMAGE"
+    ],
+    [
+      279,
+      135,
+      0,
+      126,
+      0,
+      "parallax_config"
+    ],
+    [
+      280,
+      135,
+      0,
+      123,
+      0,
+      "parallax_config"
+    ],
+    [
+      281,
+      137,
+      0,
+      138,
+      0,
+      "IMAGE"
+    ],
+    [
+      283,
+      128,
+      0,
+      144,
+      0,
+      "parallax_config"
+    ],
+    [
+      285,
+      116,
+      0,
+      144,
+      1,
+      "IMAGE"
+    ],
+    [
+      299,
+      138,
+      0,
+      151,
+      0,
+      "*"
+    ],
+    [
+      300,
+      152,
+      0,
+      144,
+      2,
+      "MASK"
+    ],
+    [
+      301,
+      138,
+      0,
+      153,
+      0,
+      "MASK"
+    ],
+    [
+      305,
+      123,
+      0,
+      155,
+      0,
+      "IMAGE"
+    ],
+    [
+      309,
+      161,
+      0,
+      162,
+      0,
+      "MASK"
+    ],
+    [
+      310,
+      153,
+      0,
+      161,
+      0,
+      "MASK"
+    ],
+    [
+      312,
+      106,
+      0,
+      123,
+      1,
+      "IMAGE"
+    ],
+    [
+      331,
+      106,
+      0,
+      168,
+      0,
+      "*"
+    ],
+    [
+      333,
+      166,
+      0,
+      170,
+      0,
+      "IMAGE"
+    ],
+    [
+      335,
+      166,
+      0,
+      171,
+      1,
+      "IMAGE"
+    ],
+    [
+      336,
+      171,
+      0,
+      172,
+      0,
+      "IMAGE"
+    ],
+    [
+      339,
+      174,
+      0,
+      171,
+      0,
+      "IMAGE"
+    ],
+    [
+      340,
+      116,
+      0,
+      175,
+      0,
+      "IMAGE"
+    ],
+    [
+      347,
+      177,
+      0,
+      176,
+      0,
+      "IMAGE"
+    ],
+    [
+      355,
+      167,
+      0,
+      182,
+      0,
+      "MASK"
+    ],
+    [
+      356,
+      182,
+      0,
+      166,
+      2,
+      "MASK"
+    ],
+    [
+      358,
+      169,
+      0,
+      166,
+      0,
+      "IMAGE"
+    ],
+    [
+      360,
+      123,
+      0,
+      183,
+      0,
+      "IMAGE"
+    ],
+    [
+      361,
+      127,
+      0,
+      183,
+      1,
+      "parallax_config"
+    ],
+    [
+      362,
+      163,
+      0,
+      183,
+      2,
+      "MASK"
+    ],
+    [
+      363,
+      183,
+      1,
+      119,
+      0,
+      "MASK"
+    ],
+    [
+      364,
+      183,
+      1,
+      109,
+      0,
+      "MASK"
+    ],
+    [
+      365,
+      183,
+      0,
+      108,
+      0,
+      "IMAGE"
+    ],
+    [
+      366,
+      183,
+      1,
+      174,
+      0,
+      "MASK"
+    ],
+    [
+      368,
+      183,
+      2,
+      184,
+      0,
+      "IMAGE"
+    ],
+    [
+      369,
+      183,
+      2,
+      166,
+      1,
+      "IMAGE"
+    ],
+    [
+      370,
+      183,
+      2,
+      118,
+      3,
+      "IMAGE"
+    ],
+    [
+      371,
+      178,
+      0,
+      177,
+      2,
+      "MASK"
+    ],
+    [
+      373,
+      179,
+      0,
+      177,
+      1,
+      "IMAGE"
+    ],
+    [
+      374,
+      116,
+      0,
+      177,
+      0,
+      "IMAGE"
+    ]
+  ],
+  "groups": [
+    {
+      "title": "Set Config and Load Frame",
+      "bounding": [
+        -3519,
+        1125,
+        1173,
+        1061
+      ],
+      "color": "#88A",
+      "font_size": 24
+    },
+    {
+      "title": "Layer Shifting",
+      "bounding": [
+        -2271,
+        1102,
+        1553,
+        1060
+      ],
+      "color": "#8AA",
+      "font_size": 24
+    },
+    {
+      "title": "Inpainting Shifted Regions",
+      "bounding": [
+        633,
+        794,
+        1368,
+        1720
+      ],
+      "color": "#a1309b",
+      "font_size": 24
+    },
+    {
+      "title": "Saving Frames / Creating Video",
+      "bounding": [
+        2129,
+        1357,
+        1110,
+        1185
+      ],
+      "color": "#444",
+      "font_size": 24
+    },
+    {
+      "title": "Load Static Object Masks",
+      "bounding": [
+        -4834,
+        620,
+        1200,
+        889
+      ],
+      "color": "#3f789e",
+      "font_size": 24
+    },
+    {
+      "title": "Load Start Image",
+      "bounding": [
+        -4874,
+        1602,
+        1224,
+        896
+      ],
+      "color": "#3f789e",
+      "font_size": 24
+    },
+    {
+      "title": "Add Objects Back",
+      "bounding": [
+        -614,
+        1090,
+        1181,
+        1301
+      ],
+      "color": "#b58b2a",
+      "font_size": 24
+    }
+  ],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.6830134553650709,
+      "offset": {
+        "0": 526.4834594726562,
+        "1": -399.9134826660156
+      }
+    }
+  },
+  "version": 0.4
+}

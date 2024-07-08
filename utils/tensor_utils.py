@@ -1,10 +1,33 @@
-import torch
-from typing import Tuple
+from torch import Tensor
+from typing import Tuple, Callable
 
 
 class TensorImgUtils:
+    """
+    Utility functions for working with image tensors when the shapes/types aren't static or well defined.
+
+    Note:
+        `squeeze(dim)` and `unsqueeze(dim)` remove/add singleton dimensions to tensors. Adding a singleton
+        dimension expands the tensor's shape by introducing an additional axis with a size of 1.
+
+        Since a grayscale/mask tensor's channel dimension is a singleton dimension (only 1 channel), it's
+        indistinguishable from a batch dimension with size 1. So, there's no way to tell whether a `[1, H, W]`
+        tensor is [B, H, W] or [A, H, W] (where `A` represents an alpha channel). Likewise, there's no way to
+        tell whether a `[H, W, 1]` tensor is `[H, W, C]` or `[H, W, A]`.
+
+    Known Types:
+        - HW: Height x Width
+        - HWC: Height x Width x Channel
+        - HWCA: Height x Width x Channel x Alpha
+        - AHWC: Alpha x Height x Width x Channel
+        - BHWC: Batch x Height x Width x Channel
+        - BCHW: Batch x Channel x Height x Width
+        - BHW: Batch x Height x Width
+
+    """
+
     @staticmethod
-    def from_to(from_type: list[str], to_type: list[str]):
+    def from_to(from_type: list[str], to_type: list[str]) -> Callable[[Tensor], Tensor]:
         """Return a function that converts a tensor from one type to another. Args can be lists of strings or just strings (e.g., ["C", "H", "W"] or just "CHW")."""
         if isinstance(from_type, list):
             from_type = "".join(from_type)
@@ -13,13 +36,13 @@ class TensorImgUtils:
 
         permute_arg = [from_type.index(c) for c in to_type]
 
-        def convert(tensor: torch.Tensor) -> torch.Tensor:
+        def convert(tensor: Tensor) -> Tensor:
             return tensor.permute(permute_arg)
 
         return convert
 
     @staticmethod
-    def convert_to_type(tensor: torch.Tensor, to_type: str) -> torch.Tensor:
+    def convert_to_type(tensor: Tensor, to_type: str) -> Tensor:
         """Convert a tensor to a specific type."""
         from_type = TensorImgUtils.identify_type(tensor)[0]
         if from_type == list(to_type):
@@ -37,7 +60,56 @@ class TensorImgUtils:
         return TensorImgUtils.from_to(from_type, list(to_type))(tensor)
 
     @staticmethod
-    def identify_type(tensor: torch.Tensor) -> Tuple[list[str], str]:
+    def infer_hw_axis(image: Tensor) -> Tuple[int, int]:
+        """Infer the height and width axes of the image tensor
+
+        Returns:
+            Tuple[int, int]: The indices of the height and width axes
+        """
+        tensor_type = TensorImgUtils.identify_type(image)[1]
+        if tensor_type in ["HWRGB", "HWRGBA", "HWA"]:
+            return (0, 1)
+        elif tensor_type in ["RGBHW", "RGBAHW", "AHW"]:
+            return (1, 2)
+        elif tensor_type == "BHWRGB":
+            return (1, 2)
+        elif tensor_type == "BRGBHW":
+            return (2, 3)
+
+    @staticmethod
+    def height_width(image: Tensor) -> Tuple[int, int]:
+        """Return the height and width of the image tensor.
+
+        Returns:
+            Tuple[int, int]: The height and width of the image tensor
+        """
+        h_axis, w_axis = TensorImgUtils.infer_hw_axis(image)
+        return image.size(h_axis), image.size(w_axis)
+
+    @staticmethod
+    def smaller_axis(image: Tensor) -> int:
+        """Return the axis with the smaller size.
+
+        Returns:
+            int: The index of the axis with the smaller size
+        """
+        h, w = TensorImgUtils.height_width(image)
+        h_axis, w_axis = TensorImgUtils.infer_hw_axis(image)
+        return h_axis if h < w else w_axis
+
+    @staticmethod
+    def larger_axis(image: Tensor) -> int:
+        """Return the axis with the larger size.
+
+        Returns:
+            int: The index of the axis with the larger size
+        """
+        h, w = TensorImgUtils.height_width(image)
+        h_axis, w_axis = TensorImgUtils.infer_hw_axis(image)
+        return h_axis if h > w else w_axis
+
+    @staticmethod
+    def identify_type(tensor: Tensor) -> Tuple[list[str], str]:
         """Identify the type of image tensor. Doesn't currently check for BHW. Returns one of the following:"""
         dim_n = tensor.dim()
         if dim_n == 2:
@@ -78,8 +150,8 @@ class TensorImgUtils:
         )
 
     @staticmethod
-    def test_squeeze_batch(tensor: torch.Tensor, strict=False) -> torch.Tensor:
-        # Check if the tensor has a batch dimension (size 4)
+    def test_squeeze_batch(tensor: Tensor, strict=False) -> Tensor:
+        """Check if the tensor has a batch dimension (size 4) and squeeze it if it does."""
         if tensor.dim() == 4:
             if tensor.size(0) == 1 or not strict:
                 # If it has a batch dimension with size 1, remove it. It represents a single image.
@@ -93,8 +165,8 @@ class TensorImgUtils:
             return tensor
 
     @staticmethod
-    def test_unsqueeze_batch(tensor: torch.Tensor) -> torch.Tensor:
-        # Check if the tensor has a batch dimension (size 4)
+    def test_unsqueeze_batch(tensor: Tensor) -> Tensor:
+        """Check if the tensor has a batch dimension (size 4) and squeeze it if it does."""
         if tensor.dim() == 3:
             # If it doesn't have a batch dimension, add one. It represents a single image.
             return tensor.unsqueeze(0)
@@ -103,27 +175,10 @@ class TensorImgUtils:
             return tensor
 
     @staticmethod
-    def most_pixels(img_tensors: list[torch.Tensor]) -> torch.Tensor:
+    def most_pixels(img_tensors: list[Tensor]) -> Tensor:
+        """Return the tensor with the most pixels."""
         sizes = [
             TensorImgUtils.height_width(img)[0] * TensorImgUtils.height_width(img)[1]
             for img in img_tensors
         ]
         return img_tensors[sizes.index(max(sizes))]
-
-    @staticmethod
-    def height_width(image: torch.Tensor) -> Tuple[int, int]:
-        """Like torchvision.transforms methods, this method assumes Tensor to
-        have [..., H, W] shape, where ... means an arbitrary number of leading
-        dimensions
-        """
-        return image.shape[-2:]
-
-    @staticmethod
-    def smaller_axis(image: torch.Tensor) -> int:
-        h, w = TensorImgUtils.height_width(image)
-        return 2 if h < w else 3
-
-    @staticmethod
-    def larger_axis(image: torch.Tensor) -> int:
-        h, w = TensorImgUtils.height_width(image)
-        return 2 if h > w else 3

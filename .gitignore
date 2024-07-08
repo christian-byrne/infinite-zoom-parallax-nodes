@@ -4,6 +4,10 @@ test-images
 todo.md
 .python-version
 
+tests/test-workflows/outpaint.json
+image_loaders/load_rand_img_pose_pair.py
+image_loaders/load_most_recent_img.py
+
 # Ignore temporary files with various extensions
 **/notes.*
 **/temp.*

@@ -1,13 +1,15 @@
 import os
-import sys
-sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 import json
-import torch
-from PIL import Image
 import subprocess
+import torch
+import cv2
+from PIL import Image
 from moviepy.editor import VideoClip, ImageClip, CompositeVideoClip
+from torchvision.transforms import ToTensor, ToPILImage
 
-from termcolor import colored
+from .utils.tensor_utils import TensorImgUtils
+
+from rich import print
 from typing import Tuple
 
 import folder_paths
@@ -20,21 +22,25 @@ class LayerFramesToParallaxVideoNode:
             "required": {
                 "parallax_config": ("parallax_config",),
                 "parallax_end_frame": ("IMAGE",),
-            }
+            },
+            "optional": {
+                "static_objects_mask": ("MASK",),
+            },
         }
 
     RETURN_TYPES = ("STRING",)
     RETURN_NAMES = ("saved_video_path_str",)
     FUNCTION = "main"
     OUTPUT_NODE = True
+    CATEGORY = "infinite/parallax"
 
     def main(
         self,
         parallax_config: str,  # json string
-        parallax_end_frame: torch.Tensor,  # [Batch_n, H, W, 3-channel]
+        parallax_end_frame: torch.Tensor,
+        static_objects_mask: torch.Tensor = None,
     ) -> Tuple[str, ...]:
-
-        self.__set_config(parallax_config)
+        self._set_config(parallax_config)
 
         # If frame count matches the num_iterations, create the video, otherwise do nothing
         cur_frame_ct = self.get_project_frame_ct()
@@ -44,13 +50,13 @@ class LayerFramesToParallaxVideoNode:
             print(msg)
             return (msg,)
 
+        self.static_objects_mask = static_objects_mask
         self.set_layer_frame_ct()
         self.set_original_dimensions()
 
         return (self.composite_layer_videoclips(),)
 
     def set_original_dimensions(self):
-        # Get the original dimensions of the first frame
         cur_image_path = self.try_get_start_img()
         if not cur_image_path:
             return
@@ -58,7 +64,6 @@ class LayerFramesToParallaxVideoNode:
         self.original_width, self.original_height = img.size
 
     def set_layer_frame_ct(self):
-        # Use number of layer 0 frames as the frame count (bc all layers will have the same number of frames)
         self.layer_frame_ct = len(
             [
                 f
@@ -76,8 +81,10 @@ class LayerFramesToParallaxVideoNode:
                 layer_video_clips.append(layer_videoclip)
 
         video_composite = CompositeVideoClip(
-            layer_video_clips, size=(self.original_width, self.original_height)
+            layer_video_clips,
+            size=(self.original_width, self.original_height),
         )
+
         output_path = self.__get_parallax_proj_dirpath()
         video_ct = len([f for f in os.listdir(output_path) if "parallax_video" in f])
         video_path = os.path.join(output_path, f"parallax_video_{video_ct}.mp4")
@@ -104,26 +111,54 @@ class LayerFramesToParallaxVideoNode:
                 ),
                 threads=12,
             )
-        
-        # Write to project dir
+
         write_video(video_path)
+        composte_path = os.path.join(
+            output_path, f"parallax_video_{video_ct}_composite.mp4"
+        )
+        overlay_image_on_video(video_path, self.get_rgba_original_path(), composte_path)
 
+        inputs_path = os.path.join(
+            folder_paths.get_input_directory(), f"parallax_video_{video_ct}.mp4"
+        )
+        # write_video(inputs_path)
+        if os.name == "nt":
+            open_cmd = "start"
+        else:
+            open_cmd = "open"
 
-        # TODO: Remove writing to input dir and opening with subprocess - for testing
-        inputs_path = os.path.join(folder_paths.get_input_directory(), f"parallax_video_{video_ct}.mp4")
-        write_video(inputs_path)
         subprocess.Popen(
-            ["xdg-open", video_path],
+            [open_cmd, composte_path],
             stdout=subprocess.DEVNULL,
             stderr=subprocess.DEVNULL,
         )
 
         return inputs_path
 
-    def create_layer_videoclip(self, layer_config, layer_index):
-        # Get the layer height and velocity
-        layer_velocity = layer_config["velocity"]
+    def save_rgba_version_original(self):
+        og = self.get_original_image()
+        og = torch.cat(
+            [og, self.static_objects_mask.unsqueeze(0).unsqueeze(-1)], dim=-1
+        )
+        pil = ToPILImage()(TensorImgUtils.convert_to_type(og, "cHW"))
+        path = os.path.join(self.__get_parallax_proj_dirpath(), "original_rgba.png")
+        pil.save(path)
+        self.rgba_original_path = path
 
+    def get_rgba_original_path(self):
+        if not hasattr(self, "rgba_original_path"):
+            self.save_rgba_version_original()
+        return self.rgba_original_path
+
+    def get_original_image(self) -> torch.Tensor:
+        output_path = self.__get_parallax_proj_dirpath()
+        original_image = TensorImgUtils.convert_to_type(
+            ToTensor()(Image.open(os.path.join(output_path, "original.png"))), "HWC"
+        )
+        return original_image
+
+    def create_layer_videoclip(self, layer_config, layer_index):
+        layer_velocity = layer_config["velocity"]
         max_height = self.original_height
         if layer_config["top"] >= max_height:
             return False
@@ -133,7 +168,6 @@ class LayerFramesToParallaxVideoNode:
             layer_config["bottom"] = max_height
         layer_height = layer_config["bottom"] - layer_config["top"]
 
-        # Get the parallax project directory
         output_path = self.__get_parallax_proj_dirpath()
 
         # Get the final width: number of steps * layer velocity
@@ -160,21 +194,23 @@ class LayerFramesToParallaxVideoNode:
             stitched_image.paste(layer_frame, (int(x_offset), 0))
             x_offset -= layer_velocity
 
-        # Set the duration of the videoclip
         duration = float(self.layer_frame_ct) * (
             1.0 / float(self.parallax_config["fps"])
         )
 
-        # Create and return a videoclip from the stitched image
         save_path = os.path.join(output_path, f"stitched_{layer_index}.png")
         stitched_image.save(save_path)
         image_clip = ImageClip(save_path)
 
         def make_frame(t):
             x = int(added_width * (t / duration))
-            return image_clip.get_frame(t)[:, x : x + self.original_width]
+            cur_frame = image_clip.get_frame(t)[:, x : x + self.original_width]
+            return cur_frame
 
-        return VideoClip(make_frame, duration=duration)
+        return VideoClip(
+            make_frame,
+            duration=duration,
+        )
 
     def get_project_frame_ct(self):
         if not self.__project_dir_exists():
@@ -193,23 +229,55 @@ class LayerFramesToParallaxVideoNode:
                 cur_image_path = os.path.join(output_path, start_images[-1])
         return cur_image_path
 
-    def __set_config(self, parallax_config: str) -> None:
+    def _set_config(self, parallax_config: str) -> None:
         self.parallax_config = json.loads(parallax_config)
 
     def __get_proj_name(self):
-        return self.parallax_config["unique_project_name"]
+        return f"infinite_parallax-{self.parallax_config['unique_project_name']}"
 
     def __project_dir_exists(self):
         return os.path.exists(self.__get_parallax_proj_dirpath())
 
     def __get_parallax_proj_dirpath(self):
-        node_dir = os.path.dirname(os.path.abspath(__file__)).split(
-            "elimination-nodes"
-        )[0]
-        node_dir = os.path.join(node_dir, "elimination-nodes", "nodes", "file_system")
-        output_path = os.path.join(node_dir, self.__get_proj_name())
+        output_dir = folder_paths.get_output_directory()
+        output_path = os.path.join(output_dir, self.__get_proj_name())
         return output_path
 
     @classmethod
     def IS_CHANGED(s, image):
         return LayerFramesToParallaxVideoNode.get_project_frame_ct()
+
+
+def overlay_image_on_video(video_path, image_path, output_path):
+    cap = cv2.VideoCapture(video_path)
+    overlay = cv2.imread(image_path, cv2.IMREAD_UNCHANGED)  # Load with alpha
+
+    fourcc = cv2.VideoWriter_fourcc(*"mp4v")  # Choose your desired codec
+    fps = cap.get(cv2.CAP_PROP_FPS)
+    frame_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+    frame_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+
+    out = cv2.VideoWriter(output_path, fourcc, fps, (frame_width, frame_height))
+
+    while cap.isOpened():
+        ret, frame = cap.read()
+        if not ret:
+            break
+
+        # Resize overlay to match frame size if necessary
+        overlay_resized = cv2.resize(overlay, (frame_width, frame_height))
+
+        # Extract alpha channel
+        alpha = overlay_resized[:, :, 3] / 255.0
+        alpha_inv = 1.0 - alpha
+
+        # Blend images using alpha channel
+        for c in range(0, 3):
+            frame[:, :, c] = (
+                alpha * overlay_resized[:, :, c] + alpha_inv * frame[:, :, c]
+            )
+
+        out.write(frame)
+
+    cap.release()
+    out.release()

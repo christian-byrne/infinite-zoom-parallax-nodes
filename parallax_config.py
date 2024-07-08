@@ -7,10 +7,10 @@ from typing import Tuple, Union
 
 
 class ParallaxConfigDictNode:
-    CATEGORY = "image"
     RETURN_TYPES = ("parallax_config",)
     RETURN_NAMES = ("parallax_config",)
     FUNCTION = "main"
+    CATEGORY = "infinite/parallax"
 
     @classmethod
     def INPUT_TYPES(s):
@@ -27,7 +27,6 @@ class ParallaxConfigDictNode:
                         "min": 3,
                         "max": 45,
                         "step": 1,
-                        "display": "slider",
                     },
                 ),
                 "fps": (
